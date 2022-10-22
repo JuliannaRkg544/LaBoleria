@@ -9,6 +9,20 @@ export async function createCake(req, res) {
     );
     res.sendStatus(201);
   } catch (error) {
-    return console.log(error);
+    console.log(error);
+    return res.sendStatus(500)
+  }
+}
+
+export async function getCakes(req,res){
+  try {
+   const {rows: cakes} = await db.query(`SELECT * FROM cakes`)
+   if(cakes.length === 0){
+    return res.sendStatus(404)
+   }
+   res.status(200).send(cakes)
+  } catch (error) {
+    console.log(error)
+    return res.sendStatus(500)
   }
 }
